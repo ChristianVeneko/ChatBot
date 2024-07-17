@@ -34,12 +34,35 @@
   
   <script setup>
   import { ref } from 'vue'
+  import apiClient from '../api'
+  import { useMessagesStore } from '../stores/useMessagesStore'
   
   const newMessage = ref('')
+  const store = useMessagesStore()
+  const { addMessage } = store
   
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (newMessage.value.trim() !== '') {
-      console.log(newMessage.value)
+      const userMessage = {
+        id: Date.now(),
+        user: 'Tú',
+        text: newMessage.value,
+        avatar: '🙋‍♀️'
+      }
+      addMessage(userMessage)
+  
+      try {
+        const response = await apiClient.post('/chat', { message: newMessage.value })
+        const botMessage = {
+          id: Date.now() + 1,
+          user: 'ChatGPT',
+          text: response.data.message,
+          avatar: '🤖'
+        }
+        addMessage(botMessage)
+      } catch (error) {
+        console.error('Error al enviar el mensaje:', error)
+      }
       newMessage.value = ''
     }
   }

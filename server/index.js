@@ -1,7 +1,15 @@
+// src/server.js (o donde esté tu servidor)
 const express = require('express');
-const app = express();
+const cors = require('cors');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-require('dotenv').config(); 
+require('dotenv').config();
+
+const app = express();
+
+// Configurar CORS
+app.use(cors({
+    origin: 'http://localhost:5173'
+  }));
 
 // Crear cliente de Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);

@@ -9,13 +9,10 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { useMessagesStore } from '../stores/useMessagesStore'
   import MessageItem from './MessageItem.vue'
   
-  const messages = ref([
-    { id: 1, user: 'Bot', text: '¡Hola! ¿En qué puedo ayudarte hoy?', avatar: '🤖' },
-    { id: 2, user: 'You', text: 'Hola, me gustaría saber más sobre la inteligencia artificial.', avatar: '🙋‍♀️' },
-
-  ])
+  const store = useMessagesStore()
+  const { messages } = store
   </script>
   
