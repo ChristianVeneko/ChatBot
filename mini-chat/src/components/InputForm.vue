@@ -32,6 +32,7 @@
     </div>
   </template>
   
+  
   <script setup>
   import { ref } from 'vue'
   import apiClient from '../api'
@@ -45,7 +46,7 @@
     if (newMessage.value.trim() !== '') {
       const userMessage = {
         id: Date.now(),
-        user: 'Tú',
+        user: 'You',
         text: newMessage.value,
         avatar: '🙋‍♀️'
       }
@@ -55,7 +56,7 @@
         const response = await apiClient.post('/chat', { message: newMessage.value })
         const botMessage = {
           id: Date.now() + 1,
-          user: 'ChatGPT',
+          user: 'Bot',
           text: response.data.message,
           avatar: '🤖'
         }

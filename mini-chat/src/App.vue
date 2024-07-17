@@ -1,11 +1,12 @@
 <template>
-  <div class="flex flex-col h-[90vh] max-w-2xl mx-auto bg-background rounded-2xl shadow-lg overflow-hidden">
+  <div class="flex flex-col h-screen max-w-2xl mx-auto bg-background rounded-2xl shadow-lg overflow-hidden">
     <Header />
     <MessageList />
     <InputForm />
     <Footer />
   </div>
 </template>
+
 
 <script setup>
 import Header from './components/Header.vue'
