@@ -8,8 +8,10 @@ const app = express();
 
 // Configurar CORS
 app.use(cors({
-    origin: 'http://localhost:5173'
-  }));
+    origin: process.env.URL
+}));
+
+
 
 // Crear cliente de Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
