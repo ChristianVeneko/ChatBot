@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-muted p-4 flex items-center gap-2">
+    <div class="bg-muted p-4 flex items-center gap-2 fixed bottom-0 left-0 w-full z-10">
       <input
         v-model="newMessage"
         @keyup.enter="sendMessage"
