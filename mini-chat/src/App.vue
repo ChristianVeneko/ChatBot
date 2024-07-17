@@ -14,5 +14,5 @@ import InputForm from './components/InputForm.vue'
 import Footer from './components/Footer.vue'
 </script>
 
-<style scoped>\
+<style scoped>
 </style>
