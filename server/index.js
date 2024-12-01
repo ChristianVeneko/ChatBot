@@ -1,38 +1,41 @@
-// src/server.js (o donde esté tu servidor)
 const express = require('express');
 const cors = require('cors');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 require('dotenv').config();
 
 const app = express();
 
-// Configurar CORS
 app.use(cors({
-    origin: process.env.URL
+  origin: process.env.URL
 }));
-
-
-
-// Crear cliente de Google Generative AI
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 app.use(express.json());
 
 app.post('/chat', async (req, res) => {
   try {
-    const prompt = req.body.message; // Obtener el prompt del cuerpo de la solicitud
+    const prompt = req.body.message;
 
     if (!prompt || prompt.trim() === '') {
       return res.status(400).json({ error: 'Se requiere un mensaje válido.' });
     }
 
     // Generar contenido con Gemini Pro
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const response = await fetch('http://localhost:3001/api/v1/workspace/uft-chat/chat', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Authorization': `${process.env.API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "message": `${prompt}`,
+        "mode": "chat"
+      })
+    });
 
-    res.json({ message: text }); 
+    const parsedData = await response.json();
+    const text = parsedData.textResponse || parsedData.message || ""; // Access from specific key or default if not found
+
+    res.json({ message: text });
   } catch (error) {
     console.error('Error al generar contenido:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
